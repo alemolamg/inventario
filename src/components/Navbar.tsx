@@ -2,9 +2,9 @@ import React from "react";
 
 const Navbar = () => (
   <nav>
-    <h1>Inventario</h1>
-    <h1>Menu contextual</h1>
-    {/* Puedes añadir enlaces aquí */}
+    <h2>HOME</h2>
+    <h2>Inventario</h2>
+    <h2>Usuarios</h2>
   </nav>
 );
 
