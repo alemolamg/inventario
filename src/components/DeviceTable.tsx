@@ -62,19 +62,19 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices }) => {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Inventario de Dispositivos</h1>
-      <div className="flex justify-between items-center mb-4">
-        <div>
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
+        <div className="flex flex-col sm:flex-row">
           <input
             type="text"
             placeholder="Filtrar por nombre..."
             value={filterName}
             onChange={(e) => setFilterName(e.target.value)}
-            className="border p-2 rounded"
+            className="border p-2 rounded mb-2 sm:mb-0"
           />
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="border p-2 rounded ml-2"
+            className="border p-2 rounded sm:ml-2"
           >
             <option value="">Todos los estados</option>
             {Object.values(DeviceStatus).map((status) => (
@@ -84,64 +84,113 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices }) => {
             ))}
           </select>
         </div>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded">
+        <button className="bg-blue-500 text-white px-4 py-2 rounded mt-2 sm:mt-0">
           Añadir Dispositivo
         </button>
       </div>
 
-      <table className="min-w-full border-collapse block md:table">
-        <thead className="block md:table-header-group">
-          <tr className="border-b border-gray-200 md:table-row">
-            <th className="p-2 text-left block md:table-cell">ID</th>
-            <th className="p-2 text-left block md:table-cell">Nombre</th>
-            <th className="p-2 text-left block md:table-cell">Marca</th>
-            <th className="p-2 text-left block md:table-cell">IP</th>
-            <th className="p-2 text-left block md:table-cell">MAC</th>
-            <th className="p-2 text-left block md:table-cell">Estado</th>
-            <th className="p-2 text-left block md:table-cell">Usuario</th>
-          </tr>
-        </thead>
-        <tbody className="block md:table-row-group">
-          {filteredDevices.map((device) => (
-            <tr
-              key={device.id}
-              className="border-b border-gray-200 md:table-row"
-            >
-              <td className="p-2 block md:table-cell">{device.id}</td>
-              <td className="p-2 block md:table-cell">{device.name}</td>
-              <td className="p-2 block md:table-cell">{device.brand}</td>
-              <td className="p-2 block md:table-cell">
-                {device.ipAddress || "N/A"}
-              </td>
-              <td className="p-2 block md:table-cell">
-                {device.macAddress || "N/A"}
-              </td>
-              <td className="p-2 block md:table-cell">
-                <select
-                  value={device.status || ""}
-                  onChange={(e) =>
-                    handleStatusChange(
-                      device.id,
-                      e.target.value as DeviceStatus
-                    )
-                  }
-                  className="border p-1 rounded"
-                >
-                  <option value="">Seleccionar estado</option>
-                  {Object.values(DeviceStatus).map((status) => (
-                    <option key={status} value={status}>
-                      {status}
-                    </option>
-                  ))}
-                </select>
-              </td>
-              <td className="p-2 block md:table-cell">
-                {device.userId ?? "N/A"}
-              </td>
+      <div className="hidden md:block">
+        <table className="min-w-full border-collapse">
+          <thead>
+            <tr className="border-b border-gray-200">
+              <th className="p-2 text-left">ID</th>
+              <th className="p-2 text-left">Nombre</th>
+              <th className="p-2 text-left">Marca</th>
+              <th className="p-2 text-left">IP</th>
+              <th className="p-2 text-left">MAC</th>
+              <th className="p-2 text-left">Estado</th>
+              <th className="p-2 text-left">Usuario</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredDevices.map((device) => (
+              <tr key={device.id} className="border-b border-gray-200">
+                <td className="p-2">{device.id}</td>
+                <td className="p-2">{device.name}</td>
+                <td className="p-2">{device.brand}</td>
+                <td className="p-2">{device.ipAddress || "N/A"}</td>
+                <td className="p-2">{device.macAddress || "N/A"}</td>
+                <td className="p-2">
+                  <select
+                    value={device.status || ""}
+                    onChange={(e) =>
+                      handleStatusChange(
+                        device.id,
+                        e.target.value as DeviceStatus
+                      )
+                    }
+                    className="border p-1 rounded"
+                  >
+                    <option value="">Seleccionar estado</option>
+                    {Object.values(DeviceStatus).map((status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td className="p-2">{device.userId ?? "N/A"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="block md:hidden">
+        {filteredDevices.map((device) => (
+          <div key={device.id} className="border-b border-gray-200 p-2 mb-2">
+            <p>
+              <strong>ID:</strong> {device.id}
+            </p>
+            <p>
+              <strong>Nombre:</strong> {device.name}
+            </p>
+            <p>
+              <strong>Marca:</strong> {device.brand}
+            </p>
+            <p>
+              <strong>Estado:</strong> {device.status}
+            </p>
+            <p>
+              <strong>Usuario:</strong> {device.userId ?? "N/A"}
+            </p>
+            {/* Campos adicionales */}
+            <details className="mt-2">
+              <summary className="cursor-pointer text-blue-500">
+                Más detalles
+              </summary>
+              <p>
+                <strong>IP:</strong> {device.ipAddress || "N/A"}
+              </p>
+              <p>
+                <strong>MAC:</strong> {device.macAddress || "N/A"}
+              </p>
+              <div>
+                <label className="block text-sm">
+                  Cambiar estado:
+                  <select
+                    value={device.status || ""}
+                    onChange={(e) =>
+                      handleStatusChange(
+                        device.id,
+                        e.target.value as DeviceStatus
+                      )
+                    }
+                    className="border p-1 rounded w-full mt-1"
+                  >
+                    <option value="">Seleccionar estado</option>
+                    {Object.values(DeviceStatus).map((status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+            </details>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
