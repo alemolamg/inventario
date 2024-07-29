@@ -1,12 +1,12 @@
 export type Device = {
   id: number;
   name: string;
-  brand: string;
-  ipAddress?: string;
-  macAddress?: string;
-  description?: string;
-  location?: string;
-  status?: string;
-  distribution?: string;
-  userId: number;
+  brand?: string | null;
+  ipAddress?: string | null;
+  macAddress?: string | null;
+  description?: string | null;
+  location?: string | null;
+  status?: string | null;
+  distribution?: string | null;
+  userId?: number | null;
 };

@@ -23,8 +23,8 @@ model Device {
   location       String?
   status         String?
   distribution   String?
-  userId         Int
-  user           User   @relation(fields: [userId], references: [id])
+  userId         Int?
+  user           User?   @relation(fields: [userId], references: [id])
 }
 
 model User {

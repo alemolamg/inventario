@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { Device } from "../models/Device";
 
@@ -31,7 +29,7 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices }) => (
             <td>{device.ipAddress || "N/A"}</td>
             <td>{device.macAddress || "N/A"}</td>
             <td>{device.status || "N/A"}</td>
-            <td>{device.userId}</td>
+            <td>{device.userId ?? "N/A"}</td>
           </tr>
         ))}
       </tbody>
