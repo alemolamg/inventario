@@ -1,7 +1,8 @@
-"use client";
+// src/components/DeviceTable.tsx
+"use client"; // Asegúrate de que este archivo se trate como un componente del lado del cliente
 
 import React, { useState, useEffect } from "react";
-import { Device } from "../models/Device";
+import { Device, DeviceStatus } from "../models/Device";
 
 interface DeviceTableProps {
   devices: Device[];
@@ -30,9 +31,37 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices }) => {
     setFilteredDevices(filtered);
   }, [filterName, filterStatus, devices]);
 
+  const handleStatusChange = async (
+    deviceId: number,
+    newStatus: DeviceStatus
+  ) => {
+    try {
+      // Envía la actualización al servidor
+      const response = await fetch(`/api/devices/${deviceId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al actualizar el dispositivo");
+      }
+
+      // Refresca la lista de dispositivos
+      const updatedDevices = await fetch("/api/devices").then((res) =>
+        res.json()
+      );
+      setFilteredDevices(updatedDevices);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="p-4">
-          <h1 className="text-2xl font-bold mb-4">Inventario de Dispositivos</h1>
+      <h1 className="text-2xl font-bold mb-4">Inventario de Dispositivos</h1>
       <div className="flex justify-between items-center mb-4">
         <div>
           <input
@@ -48,9 +77,11 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices }) => {
             className="border p-2 rounded ml-2"
           >
             <option value="">Todos los estados</option>
-            <option value="Nuevo">Nuevo</option>
-            <option value="Usado">Usado</option>
-            <option value="Dañado">Dañado</option>
+            {Object.values(DeviceStatus).map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
+            ))}
           </select>
         </div>
         <button className="bg-blue-500 text-white px-4 py-2 rounded">
@@ -86,7 +117,23 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices }) => {
                 {device.macAddress || "N/A"}
               </td>
               <td className="p-2 block md:table-cell">
-                {device.status || "N/A"}
+                <select
+                  value={device.status || ""}
+                  onChange={(e) =>
+                    handleStatusChange(
+                      device.id,
+                      e.target.value as DeviceStatus
+                    )
+                  }
+                  className="border p-1 rounded"
+                >
+                  <option value="">Seleccionar estado</option>
+                  {Object.values(DeviceStatus).map((status) => (
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
+                  ))}
+                </select>
               </td>
               <td className="p-2 block md:table-cell">
                 {device.userId ?? "N/A"}

@@ -1,8 +1,11 @@
+// src/app/page.tsx
+
 import prisma from "../lib/prisma";
 import { Device } from "../models/Device";
 import DeviceTable from "../components/DeviceTable";
 
-export default async function InventoryPage() {
+const InventoryPage = async () => {
+  // Obtén los datos de los dispositivos del servidor
   const devices: Device[] = await prisma.device.findMany();
 
   return (
@@ -10,4 +13,6 @@ export default async function InventoryPage() {
       <DeviceTable devices={devices} />
     </div>
   );
-}
+};
+
+export default InventoryPage;

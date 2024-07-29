@@ -10,3 +10,10 @@ export type Device = {
   distribution?: string | null;
   userId?: number | null;
 };
+
+export enum DeviceStatus {
+  Nuevo = "Nuevo",
+  Usado = "Usado",
+  Danio = "Dañado",
+  Revisar = "Revisar",
+}
