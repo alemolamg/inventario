@@ -22,7 +22,9 @@ const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit, onClose }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2 className="text-xl font-bold mb-4">Añadir Dispositivo</h2>
+      <h2 className="text-xl font-bold mb-4">
+        Añadir Dispositivo
+      </h2>
       <div className="mb-2">
         <label className="block">Nombre:</label>
         <input

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Device, DeviceStatus } from "@/models/Device";
 import Modal from "@/components/Modal";
 import AddDeviceForm from "@/components/AddDeviceForm";
+import { ComputerDesktopIcon, PlusIcon } from "@heroicons/react/16/solid";
 
 interface DeviceTableProps {
   devices: Device[];
@@ -84,9 +85,11 @@ const DeviceTable: React.FC<DeviceTableProps> = ({
         </div>
 
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+          className="flex justify-center bg-green-800 text-white px-4 py-2 rounded mt-4"
           onClick={() => setIsModalOpen(true)}
         >
+          <PlusIcon className="h-5 w-5"/>
+          <ComputerDesktopIcon className="h-5 w-5 mr-1" />
           Añadir Dispositivo
         </button>
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>

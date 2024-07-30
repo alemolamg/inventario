@@ -2,6 +2,7 @@ import prisma from "../lib/prisma";
 import { Device } from "../models/Device";
 import Link from "next/link";
 import Image from "next/image";
+import { ComputerDesktopIcon, UsersIcon } from "@heroicons/react/16/solid";
 
 const InventoryPage = async () => {
   // Obtén los datos de los dispositivos del servidor
@@ -15,12 +16,14 @@ const InventoryPage = async () => {
         </div>
         <div className="flex space-x-4">
           <Link href="/devices">
-            <div className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg text-lg hover:bg-blue-600">
-              Ver Dispositivos
+            <div className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg text-lg hover:bg-blue-600 transition">
+              <ComputerDesktopIcon className="w-20" />
+              <p>Ver Dispositivos</p>
             </div>
           </Link>
           <Link href="/users">
-            <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg text-lg hover:bg-green-600">
+            <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg text-lg hover:bg-green-600 transition">
+            <UsersIcon className=" w-20" />
               Ver Usuarios
             </div>
           </Link>
