@@ -3,7 +3,7 @@ import React from "react";
 
 const Navbar: React.FC = () => (
   <nav className="flex flex-col sm:flex-row sm:justify-between items-center p-4 bg-gray-900 text-white shadow-lg">
-    <div className="text-2xl font-bold hidden sm:block">MiApp</div>
+    <div className="text-2xl font-bold hidden sm:block">Inventario App</div>
     <div className="flex space-x-4 sm:space-x-8">
       <Link
         href="/"

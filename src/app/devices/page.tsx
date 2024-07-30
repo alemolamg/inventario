@@ -1,15 +1,40 @@
-import prisma from "@/lib/prisma";
-import { Device } from "@/models/Device";
-import DeviceTable from "@/components/DeviceTable";
-import Navbar from "@/components/Navbar";
+"use client"; // Añade esto al principio del archivo
 
-const InventoryPage = async () => {
-  // Obtén los datos de los dispositivos del servidor
-  const devices: Device[] = await prisma.device.findMany();
+import React, { useState, useEffect } from "react";
+import { Device, DeviceStatus } from "@/models/Device";
+import DeviceTable from "@/app/devices/DeviceTable";
+
+const InventoryPage: React.FC = () => {
+  const [devices, setDevices] = useState<Device[]>([]);
+
+  useEffect(() => {
+    const fetchDevices = async () => {
+      const response = await fetch("/api/devices");
+      const devices = await response.json();
+      setDevices(devices);
+    };
+
+    fetchDevices();
+  }, []);
+
+  const handleUpdateDevice = async (updatedDevice: Device) => {
+    await fetch(`/api/devices/${updatedDevice.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: updatedDevice.status }),
+    });
+
+    // Refresh the devices list
+    const response = await fetch("/api/devices");
+    const updatedDevices = await response.json();
+    setDevices(updatedDevices);
+  };
 
   return (
     <div>
-      <DeviceTable devices={devices} />
+      <DeviceTable devices={devices} onUpdateDevice={handleUpdateDevice} />
     </div>
   );
 };
