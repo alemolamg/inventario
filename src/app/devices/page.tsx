@@ -1,7 +1,7 @@
-"use client"; // Añade esto al principio del archivo
+"use client";
 
 import React, { useState, useEffect } from "react";
-import { Device, DeviceStatus } from "@/models/Device";
+import { Device } from "@/models/Device";
 import DeviceTable from "@/app/devices/DeviceTable";
 
 const InventoryPage: React.FC = () => {

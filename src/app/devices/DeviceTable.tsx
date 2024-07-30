@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { Device, DeviceStatus } from "@/models/Device";
+import Modal from "@/components/Modal";
+import AddDeviceForm from "@/components/AddDeviceForm";
 
 interface DeviceTableProps {
   devices: Device[];
@@ -15,6 +17,7 @@ const DeviceTable: React.FC<DeviceTableProps> = ({
   const [filterName, setFilterName] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [filteredDevices, setFilteredDevices] = useState<Device[]>(devices);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     let filtered = devices;
@@ -41,6 +44,20 @@ const DeviceTable: React.FC<DeviceTableProps> = ({
     }
   };
 
+  const handleAddDevice = async (newDevice: Omit<Device, "id">) => {
+    await fetch("/api/devices", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newDevice),
+    });
+
+    // Refresh the devices list
+    const response = await fetch("/api/devices");
+    const updatedDevices = await response.json();
+  };
+
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
@@ -65,9 +82,19 @@ const DeviceTable: React.FC<DeviceTableProps> = ({
             ))}
           </select>
         </div>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded">
+
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+          onClick={() => setIsModalOpen(true)}
+        >
           Añadir Dispositivo
         </button>
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <AddDeviceForm
+            onSubmit={handleAddDevice}
+            onClose={() => setIsModalOpen(false)}
+          />
+        </Modal>
       </div>
 
       <h1 className="text-2xl font-bold mb-4">Inventario de Dispositivos</h1>

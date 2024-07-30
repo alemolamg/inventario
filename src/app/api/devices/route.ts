@@ -2,13 +2,16 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 export async function GET() {
-  try {
-    const devices = await prisma.device.findMany();
-    return NextResponse.json(devices);
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Error fetching devices" },
-      { status: 500 }
-    );
-  }
+  const devices = await prisma.device.findMany();
+  return NextResponse.json(devices);
+}
+
+export async function POST(request: Request) {
+  const data = await request.json();
+
+  const newDevice = await prisma.device.create({
+    data,
+  });
+
+  return NextResponse.json(newDevice, { status: 201 });
 }
