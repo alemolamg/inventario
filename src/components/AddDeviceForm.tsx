@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { DeviceStatus, Device } from "@/models/Device";
+import { CloudArrowDownIcon } from "@heroicons/react/20/solid";
 
 interface AddDeviceFormProps {
   onSubmit: (device: Omit<Device, "id">) => void;
@@ -22,9 +23,7 @@ const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit, onClose }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2 className="text-xl font-bold mb-4">
-        Añadir Dispositivo
-      </h2>
+      <h2 className="text-xl font-bold mb-4">Añadir Dispositivo</h2>
       <div className="mb-2">
         <label className="block">Nombre:</label>
         <input
@@ -92,14 +91,15 @@ const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit, onClose }) => {
         <button
           type="button"
           onClick={onClose}
-          className="bg-gray-500 text-white px-4 py-2 rounded mr-2"
+          className="bg-gray-600 text-white px-4 py-2 rounded mr-2"
         >
           Cancelar
         </button>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="flex items-center bg-green-800 text-white px-4 py-2 rounded"
         >
+          <CloudArrowDownIcon className="h-5 mr-1" />
           Añadir
         </button>
       </div>

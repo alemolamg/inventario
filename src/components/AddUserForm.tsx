@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { WorkZone } from "@/models/WorkZone";
 import { User } from "@/models/User";
+import { CloudArrowDownIcon } from "@heroicons/react/20/solid";
 
 interface AddUserFormProps {
   onSubmit: (user: Omit<User, "id">) => void;
@@ -71,14 +72,15 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onSubmit, onClose }) => {
         <button
           type="button"
           onClick={onClose}
-          className="bg-gray-500 text-white px-4 py-2 rounded mr-2"
+          className="bg-gray-600 text-white px-4 py-2 rounded mr-2"
         >
           Cancelar
         </button>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="flex items-center bg-green-800 text-white px-4 py-2 rounded"
         >
+          <CloudArrowDownIcon className="h-5 mr-1" />
           Añadir
         </button>
       </div>

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { User } from "@/models/User";
 import Modal from "@/components/Modal";
 import AddUserForm from "@/components/AddUserForm";
-import { UserPlusIcon } from "@heroicons/react/16/solid";
+import { UserPlusIcon } from "@heroicons/react/20/solid";
 
 interface UserTableProps {
   users: User[];
@@ -43,13 +43,13 @@ const UserTable: React.FC<UserTableProps> = ({ users, onUpdateUser }) => {
 
   return (
     <div className="p-4">
+        <h1 className="text-2xl font-bold mb-4">Usuarios</h1>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <AddUserForm
           onSubmit={handleAddUser}
           onClose={() => setIsModalOpen(false)}
         />
       </Modal>
-      <h1 className="text-2xl font-bold mb-4">Usuarios</h1>
       <div className="flex justify-between items-center mb-4">
         <div>
           <input
@@ -62,9 +62,9 @@ const UserTable: React.FC<UserTableProps> = ({ users, onUpdateUser }) => {
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex justify-center bg-blue-500 text-white px-4 py-2 rounded"
+          className="flex items-center bg-green-800 text-white px-4 py-2 rounded"
         >
-          <UserPlusIcon className="h-5 w-5 mr-1" />
+          <UserPlusIcon className="h-6 w-6 mr-1" />
           Añadir Usuario
         </button>
       </div>

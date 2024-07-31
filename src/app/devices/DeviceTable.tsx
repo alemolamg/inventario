@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Device, DeviceStatus } from "@/models/Device";
 import Modal from "@/components/Modal";
 import AddDeviceForm from "@/components/AddDeviceForm";
-import { ComputerDesktopIcon, PlusIcon } from "@heroicons/react/16/solid";
+import { ComputerDesktopIcon, PlusIcon } from "@heroicons/react/20/solid";
 
 interface DeviceTableProps {
   devices: Device[];
@@ -25,7 +25,7 @@ const DeviceTable: React.FC<DeviceTableProps> = ({
 
     if (filterName) {
       filtered = filtered.filter((device) =>
-        device.name.toLowerCase().includes(filterName.toLowerCase())
+        device.name.toLowerCase().includes(filterName.toLowerCase()) || device.brand?.toLowerCase().includes(filterName.toLowerCase()) || device.ipAddress?.includes(filterName.toLowerCase())
       );
     }
 
@@ -61,6 +61,7 @@ const DeviceTable: React.FC<DeviceTableProps> = ({
 
   return (
     <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Inventario de Dispositivos</h1>
       <div className="flex justify-between items-center mb-4">
         <div>
           <input
@@ -85,11 +86,11 @@ const DeviceTable: React.FC<DeviceTableProps> = ({
         </div>
 
         <button
-          className="flex justify-center bg-green-800 text-white px-4 py-2 rounded mt-4"
+          className="flex items-center bg-green-800 text-white px-4 py-2 rounded mt-4"
           onClick={() => setIsModalOpen(true)}
         >
-          <PlusIcon className="h-5 w-5"/>
-          <ComputerDesktopIcon className="h-5 w-5 mr-1" />
+          <PlusIcon className="h-5 w-5" />
+          <ComputerDesktopIcon className="h-6 w-6 mr-1" />
           Añadir Dispositivo
         </button>
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
@@ -100,7 +101,6 @@ const DeviceTable: React.FC<DeviceTableProps> = ({
         </Modal>
       </div>
 
-      <h1 className="text-2xl font-bold mb-4">Inventario de Dispositivos</h1>
       <table className="min-w-full border-collapse block md:table">
         <thead className="block md:table-header-group">
           <tr className="border-b border-gray-200 md:table-row">

@@ -2,7 +2,7 @@ import prisma from "../lib/prisma";
 import { Device } from "../models/Device";
 import Link from "next/link";
 import Image from "next/image";
-import { ComputerDesktopIcon, UsersIcon } from "@heroicons/react/16/solid";
+import { ComputerDesktopIcon, UsersIcon } from "@heroicons/react/20/solid";
 
 const InventoryPage = async () => {
   // Obtén los datos de los dispositivos del servidor
