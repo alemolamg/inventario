@@ -3,9 +3,11 @@
 import React, { useState, useEffect } from "react";
 import { Device } from "@/models/Device";
 import DeviceTable from "@/app/devices/DeviceTable";
+import { User } from "@/models/User";
 
 const InventoryPage: React.FC = () => {
   const [devices, setDevices] = useState<Device[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     const fetchDevices = async () => {
@@ -14,7 +16,13 @@ const InventoryPage: React.FC = () => {
       setDevices(devices);
     };
 
+    const fetchUsers = async () => {
+      const users = await (await fetch("/api/users")).json();
+      setUsers(users);
+    };
+
     fetchDevices();
+    fetchUsers();
   }, []);
 
   const handleUpdateDevice = async (updatedDevice: Device) => {
@@ -34,7 +42,11 @@ const InventoryPage: React.FC = () => {
 
   return (
     <div>
-      <DeviceTable devices={devices} onUpdateDevice={handleUpdateDevice} />
+      <DeviceTable
+        devices={devices}
+        onUpdateDevice={handleUpdateDevice}
+        users={users}
+      />
     </div>
   );
 };
