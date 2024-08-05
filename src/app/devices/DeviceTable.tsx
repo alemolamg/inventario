@@ -1,27 +1,27 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
 import { Device, DeviceStatus } from "@/models/Device";
 import { User } from "@/models/User";
 import Modal from "@/components/Modal";
 import AddDeviceForm from "@/components/AddDeviceForm";
-import { ComputerDesktopIcon, PlusIcon } from "@heroicons/react/20/solid";
+import EditDeviceForm from "@/components/EditDeviceForm";
+import {
+  ComputerDesktopIcon,
+  PlusIcon,
+  PencilIcon,
+} from "@heroicons/react/20/solid";
 
 interface DeviceTableProps {
   devices: Device[];
   users: User[];
-  onUpdateDevice: (updatedDevice: Device) => void;
 }
 
-const DeviceTable: React.FC<DeviceTableProps> = ({
-  devices,
-  users,
-  onUpdateDevice,
-}) => {
+const DeviceTable: React.FC<DeviceTableProps> = ({ devices, users }) => {
   const [filterName, setFilterName] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [filteredDevices, setFilteredDevices] = useState<Device[]>(devices);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [deviceToEdit, setDeviceToEdit] = useState<Device | null>(null);
 
   useEffect(() => {
     let filtered = devices;
@@ -47,7 +47,7 @@ const DeviceTable: React.FC<DeviceTableProps> = ({
   const handleStatusChange = (deviceId: number, newStatus: DeviceStatus) => {
     const updatedDevice = devices.find((device) => device.id === deviceId);
     if (updatedDevice) {
-      onUpdateDevice({ ...updatedDevice, status: newStatus });
+      handleUpdateDevice({ ...updatedDevice, status: newStatus });
     }
   };
 
@@ -63,19 +63,50 @@ const DeviceTable: React.FC<DeviceTableProps> = ({
     // Refresh the devices list
     const response = await fetch("/api/devices");
     const updatedDevices = await response.json();
-    setFilteredDevices(updatedDevices); // Asegúrate de actualizar `filteredDevices`
+    setFilteredDevices(updatedDevices);
   };
 
-  const getUserName = (
-    userId: number | undefined | null,
-    deviceName: string
-  ) => {
-    console.log("id usuario para " + deviceName + " = " + userId);
+  const handleEditDevice = (device: Device) => {
+    setDeviceToEdit(device);
+    setIsEditModalOpen(true);
+  };
+
+  const handleUpdateDevice = async (updatedDevice: Device) => {
+    await fetch(`/api/devices/${updatedDevice.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedDevice),
+    });
+
+    // Refresh the devices list
+    const response = await fetch("/api/devices");
+    const updatedDevices = await response.json();
+    setFilteredDevices(updatedDevices);
+    setIsEditModalOpen(false);
+  };
+
+  const handleDeleteDevice = async (deviceId: number) => {
+    if (
+      window.confirm("¿Estás seguro de que deseas eliminar este dispositivo?")
+    ) {
+      await fetch(`/api/devices/${deviceId}`, {
+        method: "DELETE",
+      });
+
+      // Refresh the devices list after deletion
+      const response = await fetch("/api/devices");
+      const updatedDevices = await response.json();
+      setFilteredDevices(updatedDevices);
+      setIsEditModalOpen(false);
+    }
+  };
+
+  const getUserName = (userId: number | undefined | null) => {
     const user = users.find((user) => user.id === userId);
     return user ? `${user.id} - ${user.name}` : "N/A";
   };
-
-  console.log("Lista de usuarios recibida: ", users);
 
   return (
     <div className="p-4">
@@ -105,16 +136,16 @@ const DeviceTable: React.FC<DeviceTableProps> = ({
 
         <button
           className="flex items-center bg-green-800 text-white px-4 py-2 rounded mt-4"
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setIsAddModalOpen(true)}
         >
           <PlusIcon className="h-5 w-5" />
           <ComputerDesktopIcon className="h-6 w-6 mr-1" />
           Añadir Dispositivo
         </button>
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
           <AddDeviceForm
             onSubmit={handleAddDevice}
-            onClose={() => setIsModalOpen(false)}
+            onClose={() => setIsAddModalOpen(false)}
           />
         </Modal>
       </div>
@@ -129,6 +160,7 @@ const DeviceTable: React.FC<DeviceTableProps> = ({
             <th className="p-2 text-left block md:table-cell">MAC</th>
             <th className="p-2 text-left block md:table-cell">Estado</th>
             <th className="p-2 text-left block md:table-cell">Usuario</th>
+            <th className="p-2 text-left block md:table-cell">Acciones</th>
           </tr>
         </thead>
         <tbody className="block md:table-row-group">
@@ -166,12 +198,32 @@ const DeviceTable: React.FC<DeviceTableProps> = ({
                 </select>
               </td>
               <td className="p-2 block md:table-cell">
-                {getUserName(device.userId, device.name)}
+                {getUserName(device.userId)}
+              </td>
+              <td className="p-2 block md:table-cell">
+                <button
+                  className="flex items-center bg-blue-500 text-white px-2 py-1 rounded"
+                  onClick={() => handleEditDevice(device)}
+                >
+                  <PencilIcon className="h-5 w-5" />
+                  Editar
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
+        {deviceToEdit && (
+          <EditDeviceForm
+            device={deviceToEdit}
+            users={users}
+            onSubmit={handleUpdateDevice}
+            onDelete={handleDeleteDevice}
+            onClose={() => setIsEditModalOpen(false)}
+          />
+        )}
+      </Modal>
     </div>
   );
 };

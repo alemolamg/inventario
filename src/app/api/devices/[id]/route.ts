@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-// Manejar las peticiones GET para obtener dispositivos específicos si se necesita en el futuro
+// Manejar las peticiones GET para obtener un dispositivo específico
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
@@ -25,28 +25,45 @@ export async function GET(
   }
 }
 
-// Manejar las peticiones PUT para actualizar el estado de un dispositivo
+// Manejar las peticiones PUT para actualizar un dispositivo
 export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
 ) {
   const { id } = params;
-  const { status } = await request.json();
-
-  if (!status) {
-    return NextResponse.json({ error: "Status is required" }, { status: 400 });
-  }
+  const { name, brand, ipAddress, macAddress, status, userId } =
+    await request.json();
 
   try {
     const updatedDevice = await prisma.device.update({
       where: { id: parseInt(id, 10) },
-      data: { status },
+      data: { name, brand, ipAddress, macAddress, status, userId },
     });
 
     return NextResponse.json(updatedDevice);
   } catch (error) {
     return NextResponse.json(
       { error: "Error updating device" },
+      { status: 500 }
+    );
+  }
+}
+
+// Manejar las peticiones DELETE para eliminar un dispositivo
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
+  try {
+    await prisma.device.delete({
+      where: { id: parseInt(id, 10) },
+    });
+
+    return NextResponse.json({ message: "Device deleted" });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Error deleting device" },
       { status: 500 }
     );
   }
