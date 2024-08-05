@@ -13,6 +13,7 @@ import {
 interface DeviceTableProps {
   devices: Device[];
   users: User[];
+  onUpdateDevice: (updatedDevice: Device) => void;
 }
 
 const DeviceTable: React.FC<DeviceTableProps> = ({ devices, users }) => {
