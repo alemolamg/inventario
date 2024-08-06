@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Device, DeviceStatus } from "@/models/Device";
 import { User } from "@/models/User";
+import { CloudArrowDownIcon, TrashIcon } from "@heroicons/react/20/solid";
 
 interface EditDeviceFormProps {
   device: Device;
@@ -19,6 +20,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
 }) => {
   const [name, setName] = useState(device.name);
   const [brand, setBrand] = useState(device.brand || "");
+  const [description, setdescription] = useState(device.description || "");
   const [ipAddress, setIpAddress] = useState(device.ipAddress || "");
   const [macAddress, setMacAddress] = useState(device.macAddress || "");
   const [status, setStatus] = useState(device.status || "");
@@ -32,6 +34,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
       ...device,
       name,
       brand,
+      description,
       ipAddress,
       macAddress,
       status,
@@ -56,7 +59,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="mb-4">
@@ -65,7 +68,16 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
           type="text"
           value={brand}
           onChange={(e) => setBrand(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block mb-2">Descripción</label>
+        <input
+          type="text"
+          value={description}
+          onChange={(e) => setdescription(e.target.value)}
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="mb-4">
@@ -74,7 +86,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
           type="text"
           value={ipAddress}
           onChange={(e) => setIpAddress(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="mb-4">
@@ -83,7 +95,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
           type="text"
           value={macAddress}
           onChange={(e) => setMacAddress(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="mb-4">
@@ -91,7 +103,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value as DeviceStatus)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         >
           <option value="">Seleccionar estado</option>
           {Object.values(DeviceStatus).map((status) => (
@@ -106,7 +118,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
         <select
           value={userId || ""}
           onChange={(e) => setUserId(parseInt(e.target.value))}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         >
           <option value="">Sin usuario asignado</option>
           {users.map((user) => (
@@ -116,15 +128,16 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
           ))}
         </select>
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <button
           type="button"
           onClick={handleDelete}
-          className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+          className="flex items-center bg-red-500 text-white px-4 py-2 rounded mr-2"
         >
+          <TrashIcon className="h-5 w-5 mr-2" />
           Eliminar
         </button>
-        <div>
+        <div className="flex">
           <button
             type="button"
             onClick={onClose}
@@ -134,8 +147,9 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
           </button>
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className="flex items-center bg-blue-500 text-white px-4 py-2 rounded"
           >
+            <CloudArrowDownIcon className="h-5 mr-1" />
             Guardar
           </button>
         </div>

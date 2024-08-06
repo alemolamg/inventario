@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DeviceStatus, Device } from "@/models/Device";
 import { User } from "@/models/User"; // Importar el modelo User
 import { CloudArrowDownIcon } from "@heroicons/react/20/solid";
+import style from "./FormStyles.module.css"
 
 interface AddDeviceFormProps {
   onSubmit: (device: Omit<Device, "id">) => void;
@@ -11,6 +12,7 @@ interface AddDeviceFormProps {
 const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit, onClose }) => {
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
+  const [description, setDescription] = useState("");
   const [ipAddress, setIpAddress] = useState("");
   const [macAddress, setMacAddress] = useState("");
   const [status, setStatus] = useState<DeviceStatus | "">("");
@@ -33,6 +35,7 @@ const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit, onClose }) => {
     onSubmit({
       name,
       brand,
+      description,
       ipAddress,
       macAddress,
       status,
@@ -50,7 +53,7 @@ const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit, onClose }) => {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
           required
         />
       </div>
@@ -60,8 +63,17 @@ const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit, onClose }) => {
           type="text"
           value={brand}
           onChange={(e) => setBrand(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
           required
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block">Descripción:</label>
+        <input
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="mb-4">
@@ -70,7 +82,7 @@ const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit, onClose }) => {
           type="text"
           value={ipAddress}
           onChange={(e) => setIpAddress(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="mb-4">
@@ -79,7 +91,7 @@ const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit, onClose }) => {
           type="text"
           value={macAddress}
           onChange={(e) => setMacAddress(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="mb-4">
@@ -87,7 +99,7 @@ const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit, onClose }) => {
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value as DeviceStatus)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
           required
         >
           <option value="">Seleccionar estado</option>
@@ -103,7 +115,7 @@ const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit, onClose }) => {
         <select
           value={userId}
           onChange={(e) => setUserId(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         >
           <option value="">Seleccionar usuario</option>
           {users.map((user) => (

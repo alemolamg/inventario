@@ -29,7 +29,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onSubmit, onClose }) => {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-900"
           required
         />
       </div>
@@ -39,7 +39,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onSubmit, onClose }) => {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-900"
           required
         />
       </div>
@@ -48,7 +48,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onSubmit, onClose }) => {
         <select
           value={workZone}
           onChange={(e) => setWorkZone(e.target.value as WorkZone)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-900"
           required
         >
           <option value="">Seleccionar zona de trabajo</option>
@@ -65,7 +65,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onSubmit, onClose }) => {
           type="text"
           value={contact}
           onChange={(e) => setContact(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-900"
         />
       </div>
       <div className="flex justify-end">
