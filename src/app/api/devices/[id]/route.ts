@@ -31,13 +31,13 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   const { id } = params;
-  const { name, brand, ipAddress, macAddress, status, userId } =
+  const { name, brand,description, ipAddress, macAddress, status, userId } =
     await request.json();
 
   try {
     const updatedDevice = await prisma.device.update({
       where: { id: parseInt(id, 10) },
-      data: { name, brand, ipAddress, macAddress, status, userId },
+      data: { name, brand,description, ipAddress, macAddress, status, userId },
     });
 
     return NextResponse.json(updatedDevice);

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { User } from "@/models/User";
 import { CloudArrowDownIcon, TrashIcon } from "@heroicons/react/20/solid";
+import { WorkZone } from "@/models/WorkZone";
 
 interface EditUserFormProps {
   user: User;
@@ -18,6 +19,7 @@ const EditUserForm: React.FC<EditUserFormProps> = ({
   onClose,
 }) => {
   const [formData, setFormData] = useState({ ...user });
+  const [workZone, setWorkZone] = useState<WorkZone | "" >(formData.workZone || "");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -50,13 +52,19 @@ const EditUserForm: React.FC<EditUserFormProps> = ({
       </div>
       <div className="mb-4">
         <label htmlFor="workZone">Zona de trabajo:</label>
-        <input
-          type="text"
-          name="workZone"
-          value={formData.workZone}
-          onChange={handleChange}
+        <select
+          value={workZone}
+          onChange={(e) => setWorkZone(e.target.value as WorkZone)}
           className="border p-2 rounded w-full"
-        />
+          required
+        >
+          <option value="">Seleccionar zona de trabajo</option>
+          {Object.values(WorkZone).map((zone) => (
+            <option key={zone} value={zone}>
+              {zone}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="mb-4">
         <label htmlFor="contact">Contacto:</label>

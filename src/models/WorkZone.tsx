@@ -3,5 +3,6 @@ export enum WorkZone {
   COMPRAS = "COMPRAS",
   VENTAS = "VENTAS",
   TIENDA = "TIENDA",
-  ALMACEN = "ALMACEN"
+  ALMACEN = "ALMACEN",
+  COMERCIAL = "COMERCIAL",
 }

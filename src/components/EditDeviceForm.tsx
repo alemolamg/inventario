@@ -76,7 +76,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
         <input
           type="text"
           value={description}
-          onChange={(e) => setBrand(e.target.value)}
+          onChange={(e) => setdescription(e.target.value)}
           className="border p-2 rounded w-full"
         />
       </div>
