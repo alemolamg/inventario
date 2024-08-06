@@ -119,12 +119,12 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, users }) => {
             placeholder="Filtrar por nombre..."
             value={filterName}
             onChange={(e) => setFilterName(e.target.value)}
-            className="border p-2 rounded"
+            className="border p-2 rounded dark:placeholder-gray-300 dark:bg-gray-950"
           />
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="border p-2 rounded ml-2"
+            className="border p-2 rounded ml-2 dark:bg-gray-950"
           >
             <option value="">Todos los estados</option>
             {Object.values(DeviceStatus).map((status) => (
@@ -188,7 +188,7 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, users }) => {
                       e.target.value as DeviceStatus
                     )
                   }
-                  className="border p-1 rounded"
+                  className="border p-1 rounded dark:bg-gray-950"
                 >
                   <option value="">Seleccionar estado</option>
                   {Object.values(DeviceStatus).map((status) => (

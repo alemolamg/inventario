@@ -59,7 +59,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="mb-4">
@@ -68,7 +68,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
           type="text"
           value={brand}
           onChange={(e) => setBrand(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="mb-4">
@@ -77,7 +77,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
           type="text"
           value={description}
           onChange={(e) => setdescription(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="mb-4">
@@ -86,7 +86,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
           type="text"
           value={ipAddress}
           onChange={(e) => setIpAddress(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="mb-4">
@@ -95,7 +95,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
           type="text"
           value={macAddress}
           onChange={(e) => setMacAddress(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="mb-4">
@@ -103,7 +103,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value as DeviceStatus)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         >
           <option value="">Seleccionar estado</option>
           {Object.values(DeviceStatus).map((status) => (
@@ -118,7 +118,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
         <select
           value={userId || ""}
           onChange={(e) => setUserId(parseInt(e.target.value))}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         >
           <option value="">Sin usuario asignado</option>
           {users.map((user) => (

@@ -47,7 +47,7 @@ const EditUserForm: React.FC<EditUserFormProps> = ({
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="mb-4">
@@ -55,7 +55,7 @@ const EditUserForm: React.FC<EditUserFormProps> = ({
         <select
           value={workZone}
           onChange={(e) => setWorkZone(e.target.value as WorkZone)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
           required
         >
           <option value="">Seleccionar zona de trabajo</option>
@@ -73,7 +73,7 @@ const EditUserForm: React.FC<EditUserFormProps> = ({
           name="contact"
           value={formData.contact}
           onChange={handleChange}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="mb-4">
@@ -83,7 +83,7 @@ const EditUserForm: React.FC<EditUserFormProps> = ({
           name="email"
           value={formData.email}
           onChange={handleChange}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full dark:bg-gray-950"
         />
       </div>
       <div className="flex justify-between mt-5 items-center">
