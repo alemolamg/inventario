@@ -206,7 +206,7 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, users }) => {
                   className="flex items-center bg-blue-500 text-white px-2 py-1 rounded"
                   onClick={() => handleEditDevice(device)}
                 >
-                  <PencilIcon className="h-5 w-5" />
+                  <PencilIcon className="h-5 w-5 mr-2" />
                   Editar
                 </button>
               </td>

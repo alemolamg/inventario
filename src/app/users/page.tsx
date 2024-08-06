@@ -17,22 +17,39 @@ const UsersPage: React.FC = () => {
     fetchUsers();
   }, []);
 
-  const handleAddUser = async (newUser: Omit<User, "id">) => {
-    const response = await fetch("/api/users", {
-      method: "POST",
+  const handleUpdateUser = async (updatedUser: User) => {
+    await fetch(`/api/users/${updatedUser.id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newUser),
+      body: JSON.stringify(updatedUser),
     });
 
-    const addedUser = await response.json();
-    setUsers((prevUsers) => [...prevUsers, addedUser]);
+    // Refresh the users list
+    const response = await fetch("/api/users");
+    const updatedUsers = await response.json();
+    setUsers(updatedUsers);
+  };
+
+  const handleDeleteUser = async (userId: number) => {
+    await fetch(`/api/users/${userId}`, {
+      method: "DELETE",
+    });
+
+    // Refresh the users list
+    const response = await fetch("/api/users");
+    const updatedUsers = await response.json();
+    setUsers(updatedUsers);
   };
 
   return (
     <div>
-      <UserTable users={users} onUpdateUser={handleAddUser} />
+      <UserTable
+        users={users}
+        onUpdateUser={handleUpdateUser}
+        onDeleteUser={handleDeleteUser}
+      />
     </div>
   );
 };
