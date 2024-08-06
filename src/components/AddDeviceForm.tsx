@@ -11,6 +11,7 @@ interface AddDeviceFormProps {
 const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit, onClose }) => {
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
+  const [description, setDescription] = useState("");
   const [ipAddress, setIpAddress] = useState("");
   const [macAddress, setMacAddress] = useState("");
   const [status, setStatus] = useState<DeviceStatus | "">("");
@@ -33,6 +34,7 @@ const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit, onClose }) => {
     onSubmit({
       name,
       brand,
+      description,
       ipAddress,
       macAddress,
       status,
@@ -62,6 +64,15 @@ const AddDeviceForm: React.FC<AddDeviceFormProps> = ({ onSubmit, onClose }) => {
           onChange={(e) => setBrand(e.target.value)}
           className="border p-2 rounded w-full"
           required
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block">Descripción:</label>
+        <input
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="border p-2 rounded w-full"
         />
       </div>
       <div className="mb-4">

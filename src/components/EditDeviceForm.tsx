@@ -20,6 +20,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
 }) => {
   const [name, setName] = useState(device.name);
   const [brand, setBrand] = useState(device.brand || "");
+  const [description, setdescription] = useState(device.description || "");
   const [ipAddress, setIpAddress] = useState(device.ipAddress || "");
   const [macAddress, setMacAddress] = useState(device.macAddress || "");
   const [status, setStatus] = useState(device.status || "");
@@ -33,6 +34,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
       ...device,
       name,
       brand,
+      description,
       ipAddress,
       macAddress,
       status,
@@ -65,6 +67,15 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
         <input
           type="text"
           value={brand}
+          onChange={(e) => setBrand(e.target.value)}
+          className="border p-2 rounded w-full"
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block mb-2">Descripción</label>
+        <input
+          type="text"
+          value={description}
           onChange={(e) => setBrand(e.target.value)}
           className="border p-2 rounded w-full"
         />
@@ -138,7 +149,7 @@ const EditDeviceForm: React.FC<EditDeviceFormProps> = ({
             type="submit"
             className="flex items-center bg-blue-500 text-white px-4 py-2 rounded"
           >
-            <CloudArrowDownIcon className="h-5 mr-1"/>
+            <CloudArrowDownIcon className="h-5 mr-1" />
             Guardar
           </button>
         </div>
