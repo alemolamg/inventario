@@ -16,4 +16,5 @@ export enum DeviceStatus {
   Usado = "Usado",
   Danio = "Dañado",
   Revisar = "Revisar",
+  Reciclar = "Reciclar"
 }
