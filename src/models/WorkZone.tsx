@@ -5,4 +5,5 @@ export enum WorkZone {
   TIENDA = "TIENDA",
   ALMACEN = "ALMACEN",
   COMERCIAL = "COMERCIAL",
+  MERCANCIAS = "MERCANCIAS",
 }
