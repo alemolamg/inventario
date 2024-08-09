@@ -151,7 +151,11 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, users }) => {
         </Modal>
       </div>
 
-      <table className="min-w-full border-collapse block md:table">
+      <div id="mobile_style" className="block md:hidden">
+        <div>hola mundo</div>
+      </div>
+
+      <table className="hidden min-w-full border-collapse md:table">
         <thead className="block md:table-header-group">
           <tr className="border-b border-gray-200 md:table-row">
             <th className="p-2 text-left block md:table-cell">ID</th>
@@ -164,6 +168,7 @@ const DeviceTable: React.FC<DeviceTableProps> = ({ devices, users }) => {
             <th className="p-2 text-left block md:table-cell">Acciones</th>
           </tr>
         </thead>
+
         <tbody className="block md:table-row-group">
           {filteredDevices.map((device) => (
             <tr
